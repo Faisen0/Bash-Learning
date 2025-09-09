@@ -1,0 +1,29 @@
+#!/bin/bash
+
+#Using Bash to extract API data on current weather
+Api_Key="28c3ae77313e55637013d68c3bc88c8d"
+
+read -p "Enter city name: " City
+
+Response=$(curl -s "https://api.openweathermap.org/data/2.5/weather?q=$City&appid=$Api_Key&units=metric")
+
+Temp=$(echo "$Response" | jq  '.main.temp')
+Description=$(echo "$Response" | jq -r '.weather[0].description')
+Humidity=$(echo "$Response" | jq -r '.main.humidity')
+City=$(echo "$Response" | jq -r '.name')
+Feels_Like=$(echo "$Response" | jq -r '.main.feels_like')
+
+echo "................................"
+echo "Weather in $City"
+echo "Temperature: $Temp°C"
+echo "Feels_Like: $Feels_Like°C"
+echo "Condition: $Description"
+echo "Humidity: $Humidity%"
+echo "................................"
+
+STATUS_CODE=$(echo "$Response" | jq -r '.cod')
+
+if [ "$STATUS_CODE" = "404" ]; then
+  echo "City not found. Please check the spelling."
+fi
+
