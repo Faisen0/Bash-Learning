@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Using Bash to extract API data on current weather
-Api_Key="28c3ae77313e55637013d68c3bc88c8d"
+Api_Key="Insert API Key"
 
 read -p "Enter city name: " City
 
